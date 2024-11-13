@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import useSWR from "swr";
 import { Category, Expense } from "../../db/schema";
