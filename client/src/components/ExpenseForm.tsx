@@ -179,7 +179,10 @@ export default function ExpenseForm({
                       step="0.01"
                       placeholder="Enter amount"
                       {...field}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        field.onChange(value === "" ? undefined : parseFloat(value));
+                      }}
                     />
                   </FormControl>
                   <FormMessage />

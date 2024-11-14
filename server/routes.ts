@@ -39,14 +39,22 @@ export function registerRoutes(app: Express) {
   });
 
   app.post("/api/expenses", async (req, res) => {
-    const newExpense = await db.insert(expenses).values(req.body).returning();
+    const data = {
+      ...req.body,
+      date: new Date(req.body.date),
+    };
+    const newExpense = await db.insert(expenses).values(data).returning();
     res.json(newExpense[0]);
   });
 
   app.put("/api/expenses/:id", async (req, res) => {
+    const data = {
+      ...req.body,
+      date: new Date(req.body.date),
+    };
     const updated = await db
       .update(expenses)
-      .set(req.body)
+      .set(data)
       .where(eq(expenses.id, parseInt(req.params.id)))
       .returning();
     res.json(updated[0]);
