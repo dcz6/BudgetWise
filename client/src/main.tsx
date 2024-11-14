@@ -1,10 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { Switch, Route } from "wouter";
+import { Switch, Route, Link } from "wouter";
 import "./index.css";
 import { SWRConfig } from "swr";
 import { fetcher } from "./lib/fetcher";
 import { Toaster } from "@/components/ui/toaster";
+import { Button } from "@/components/ui/button";
 import Dashboard from "./pages/Dashboard";
 import Categories from "./pages/Categories";
 import Expenses from "./pages/Expenses";
@@ -21,9 +22,9 @@ createRoot(document.getElementById("root")!).render(
         }
       }}
     >
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background text-foreground">
         <Navigation />
-        <main>
+        <main className="py-6">
           <Switch>
             <Route path="/" component={Dashboard} />
             <Route path="/categories" component={Categories} />
