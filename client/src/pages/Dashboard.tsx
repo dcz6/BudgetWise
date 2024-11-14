@@ -44,7 +44,7 @@ export default function Dashboard() {
           variant="outline"
           size="icon"
           onClick={handlePreviousMonth}
-          className="hover:bg-secondary"
+          className="hover:bg-secondary transition-colors duration-200"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -55,7 +55,7 @@ export default function Dashboard() {
           variant="outline"
           size="icon"
           onClick={handleNextMonth}
-          className="hover:bg-secondary"
+          className="hover:bg-secondary transition-colors duration-200"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -82,6 +82,7 @@ export default function Dashboard() {
                 key={category.id}
                 category={category}
                 expenses={expenses?.filter((e) => e.categoryId === category.id) ?? []}
+                selectedMonth={selectedMonth}
               />
             ))
           )}
