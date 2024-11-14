@@ -3,6 +3,7 @@ import { Category, Expense } from "../lib/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { startOfMonth, endOfMonth } from "date-fns";
+import { AlertCircle } from "lucide-react";
 
 interface BudgetProgressProps {
   category: Category;
@@ -18,7 +19,6 @@ export default function BudgetProgress({
   const monthStart = startOfMonth(selectedMonth);
   const monthEnd = endOfMonth(selectedMonth);
   
-  // Ensure proper date comparison by converting strings to Date objects
   const monthExpenses = expenses.filter(expense => {
     const expenseDate = new Date(expense.date);
     return expenseDate >= monthStart && expenseDate <= monthEnd;
@@ -26,6 +26,7 @@ export default function BudgetProgress({
 
   const total = monthExpenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
   const percentage = (total / Number(category.budget)) * 100;
+  const isOverBudget = percentage > 100;
 
   return (
     <TooltipProvider>
@@ -38,27 +39,49 @@ export default function BudgetProgress({
             />
             <span className="font-medium">{category.name}</span>
           </div>
-          <span className="text-sm text-muted-foreground">
-            ${total.toFixed(2)} / ${Number(category.budget).toFixed(2)}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className={cn(
+              "text-sm transition-colors duration-200",
+              isOverBudget ? "text-destructive font-medium" : "text-muted-foreground"
+            )}>
+              ${total.toFixed(2)} / ${Number(category.budget).toFixed(2)}
+            </span>
+            {isOverBudget && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <AlertCircle className="h-4 w-4 text-destructive animate-pulse" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Over budget by ${(total - Number(category.budget)).toFixed(2)}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
         </div>
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="relative">
               <Progress
-                value={percentage}
+                value={Math.min(percentage, 100)}
                 className={cn(
-                  "h-2 transition-all duration-300 group-hover:h-3 rounded-full border border-black/10 overflow-hidden bg-white"
+                  "h-2 transition-all duration-300 group-hover:h-3 rounded-full border border-black/10 overflow-hidden bg-white",
+                  isOverBudget && "border-destructive/50"
                 )}
                 indicatorClassName={cn(
-                  "h-full w-full flex-1 transition-all",
-                  `bg-[${category.color}]`
+                  "h-full w-full flex-1",
+                  isOverBudget && "animate-pulse"
                 )}
+                style={{
+                  "--progress-color": isOverBudget ? "hsl(var(--destructive))" : category.color,
+                } as React.CSSProperties}
               />
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{percentage.toFixed(1)}% of budget used in {selectedMonth.toLocaleString('default', { month: 'long' })}</p>
+            <p>
+              {percentage.toFixed(1)}% of budget used in {selectedMonth.toLocaleString('default', { month: 'long' })}
+              {isOverBudget && " - Over Budget!"}
+            </p>
           </TooltipContent>
         </Tooltip>
       </div>

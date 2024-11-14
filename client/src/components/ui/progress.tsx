@@ -7,12 +7,13 @@ interface ProgressProps
   extends React.ComponentProps<typeof ProgressPrimitive.Root> {
   value?: number
   indicatorClassName?: string
+  style?: React.CSSProperties
 }
 
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   ProgressProps
->(({ className, value, indicatorClassName, ...props }, ref) => (
+>(({ className, value, indicatorClassName, style, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
@@ -26,7 +27,11 @@ const Progress = React.forwardRef<
         "h-full w-full flex-1 transition-all",
         indicatorClassName
       )}
-      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+      style={{
+        transform: `translateX(-${100 - (value || 0)}%)`,
+        backgroundColor: "var(--progress-color)",
+        ...style
+      }}
     />
   </ProgressPrimitive.Root>
 ))
