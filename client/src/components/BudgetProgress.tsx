@@ -18,6 +18,7 @@ export default function BudgetProgress({
   const monthStart = startOfMonth(selectedMonth);
   const monthEnd = endOfMonth(selectedMonth);
   
+  // Ensure proper date comparison by converting strings to Date objects
   const monthExpenses = expenses.filter(expense => {
     const expenseDate = new Date(expense.date);
     return expenseDate >= monthStart && expenseDate <= monthEnd;
@@ -47,9 +48,12 @@ export default function BudgetProgress({
               <Progress
                 value={percentage}
                 className={cn(
-                  "h-2 transition-all duration-300 group-hover:h-3 rounded-full border border-black/10 overflow-hidden"
+                  "h-2 transition-all duration-300 group-hover:h-3 rounded-full border border-black/10 overflow-hidden bg-white"
                 )}
-                indicatorClassName="bg-[#4CAF50]"
+                indicatorClassName={cn(
+                  "h-full w-full flex-1 transition-all",
+                  `bg-[${category.color}]`
+                )}
               />
             </div>
           </TooltipTrigger>
