@@ -9,11 +9,38 @@ import MonthlyOverview from "../components/MonthlyOverview";
 import useSWR from "swr";
 import { Category, Expense } from "../lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { SortableBudgetCard } from "../components/SortableBudgetCard";
 
 export default function Dashboard() {
   const { data: categories, isLoading: categoriesLoading } = useSWR<Category[]>("/api/categories");
   const { data: expenses, isLoading: expensesLoading } = useSWR<Expense[]>("/api/expenses");
   const [selectedMonth, setSelectedMonth] = useState(new Date());
+  const [categoryOrder, setCategoryOrder] = useState<number[]>(() => {
+    const stored = localStorage.getItem('categoryOrder');
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   const handlePreviousMonth = () => {
     setSelectedMonth(prev => addMonths(prev, -1));
@@ -21,6 +48,32 @@ export default function Dashboard() {
 
   const handleNextMonth = () => {
     setSelectedMonth(prev => addMonths(prev, 1));
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    
+    if (!over || active.id === over.id) return;
+    
+    const sortedCategories = getSortedCategories();
+    const oldIndex = sortedCategories.findIndex(cat => cat.id === active.id);
+    const newIndex = sortedCategories.findIndex(cat => cat.id === over.id);
+    
+    const newItems = arrayMove(sortedCategories, oldIndex, newIndex);
+    const newOrder = newItems.map(item => item.id);
+    setCategoryOrder(newOrder);
+    localStorage.setItem('categoryOrder', JSON.stringify(newOrder));
+  };
+
+  const getSortedCategories = () => {
+    if (!categories) return [];
+    return categories.slice().sort((a, b) => {
+      const aIndex = categoryOrder.indexOf(a.id);
+      const bIndex = categoryOrder.indexOf(b.id);
+      if (aIndex === -1) return 1;
+      if (bIndex === -1) return -1;
+      return aIndex - bIndex;
+    });
   };
 
   const isLoading = categoriesLoading || expensesLoading;
@@ -79,14 +132,26 @@ export default function Dashboard() {
               ))}
             </div>
           ) : (
-            categories?.map((category) => (
-              <BudgetProgress
-                key={category.id}
-                category={category}
-                expenses={expenses?.filter((e) => e.categoryId === category.id) ?? []}
-                selectedMonth={selectedMonth}
-              />
-            ))
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext
+                items={getSortedCategories().map(cat => cat.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                {getSortedCategories().map((category) => (
+                  <SortableBudgetCard
+                    key={category.id}
+                    id={category.id}
+                    category={category}
+                    expenses={expenses?.filter((e) => e.categoryId === category.id) ?? []}
+                    selectedMonth={selectedMonth}
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
           )}
         </Card>
 
