@@ -41,7 +41,7 @@ export default function ExpenseForm({
       ? {
           categoryId: expense.categoryId,
           amount: expense.amount,
-          description: expense.description,
+          description: expense.description || "", // Updated to allow empty description
           date: new Date(expense.date),
         }
       : {

@@ -13,7 +13,7 @@ export const expenses = pgTable("expenses", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   categoryId: integer("category_id").references(() => categories.id).notNull(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
-  description: text("description").notNull(),
+  description: text("description"),
   date: timestamp("date").notNull().defaultNow(),
 });
 
