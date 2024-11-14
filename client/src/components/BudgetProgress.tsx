@@ -25,12 +25,6 @@ export default function BudgetProgress({
 
   const total = monthExpenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
   const percentage = (total / Number(category.budget)) * 100;
-  
-  const getProgressColor = (percent: number) => {
-    if (percent >= 90) return "bg-destructive";
-    if (percent >= 75) return "bg-warning";
-    return "bg-primary";
-  };
 
   return (
     <TooltipProvider>
@@ -53,9 +47,9 @@ export default function BudgetProgress({
               <Progress
                 value={percentage}
                 className={cn(
-                  "h-2 transition-all duration-300 group-hover:h-3",
-                  getProgressColor(percentage)
+                  "h-2 transition-all duration-300 group-hover:h-3 rounded-full border border-black/10 overflow-hidden"
                 )}
+                indicatorClassName="bg-[#4CAF50]"
               />
             </div>
           </TooltipTrigger>

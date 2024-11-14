@@ -27,13 +27,15 @@ export default function Dashboard() {
 
   return (
     <div className="container mx-auto p-4 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Budget Dashboard</h1>
-        <div className="space-x-2">
-          <Button asChild variant="outline">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+          Budget Dashboard
+        </h1>
+        <div className="flex gap-2">
+          <Button asChild variant="outline" className="transition-colors duration-200">
             <Link href="/categories">Categories</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="transition-colors duration-200">
             <Link href="/expenses">Expenses</Link>
           </Button>
         </div>
@@ -44,7 +46,7 @@ export default function Dashboard() {
           variant="outline"
           size="icon"
           onClick={handlePreviousMonth}
-          className="hover:bg-secondary transition-colors duration-200"
+          className="transition-all duration-200 hover:scale-105 hover:bg-primary/10"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -55,14 +57,14 @@ export default function Dashboard() {
           variant="outline"
           size="icon"
           onClick={handleNextMonth}
-          className="hover:bg-secondary transition-colors duration-200"
+          className="transition-all duration-200 hover:scale-105 hover:bg-primary/10"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="p-6">
+        <Card className="p-6 transition-all duration-200 hover:shadow-lg">
           <h2 className="text-xl font-semibold mb-4">Budget Overview</h2>
           {isLoading ? (
             <div className="space-y-4">
@@ -88,7 +90,7 @@ export default function Dashboard() {
           )}
         </Card>
 
-        <Card className="p-6">
+        <Card className="p-6 transition-all duration-200 hover:shadow-lg">
           <h2 className="text-xl font-semibold mb-4">Monthly Summary</h2>
           {isLoading ? (
             <div className="space-y-6">
