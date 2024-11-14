@@ -1,5 +1,5 @@
 import { Progress } from "@/components/ui/progress";
-import { Category, Expense } from "../../db/schema";
+import { Category, Expense } from "../lib/types";
 
 interface BudgetProgressProps {
   category: Category;
@@ -14,16 +14,16 @@ export default function BudgetProgress({
   const percentage = (total / Number(category.budget)) * 100;
   
   const getProgressColor = (percent: number) => {
-    if (percent >= 90) return "bg-red-500";
-    if (percent >= 75) return "bg-yellow-500";
-    return "bg-green-500";
+    if (percent >= 90) return "bg-destructive";
+    if (percent >= 75) return "bg-warning";
+    return "bg-primary";
   };
 
   return (
     <div className="space-y-2 mb-4">
       <div className="flex justify-between">
         <span className="font-medium">{category.name}</span>
-        <span className="text-sm">
+        <span className="text-sm text-muted-foreground">
           ${total.toFixed(2)} / ${Number(category.budget).toFixed(2)}
         </span>
       </div>

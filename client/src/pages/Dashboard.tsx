@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import BudgetProgress from "../components/BudgetProgress";
 import MonthlyOverview from "../components/MonthlyOverview";
 import useSWR from "swr";
-import { Category, Expense } from "../../db/schema";
+import { Category, Expense } from "../lib/types";
 
 export default function Dashboard() {
   const { data: categories } = useSWR<Category[]>("/api/categories");

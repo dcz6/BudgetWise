@@ -1,11 +1,14 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
-import { InsertExpense, Category } from "../../db/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { InsertExpense, insertExpenseSchema, Category } from "../lib/types";
 import { toast } from "@/hooks/use-toast";
 import { mutate } from "swr";
+import { useState } from "react";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
 
 interface ExpenseFormProps {
   open: boolean;
@@ -18,21 +21,39 @@ export default function ExpenseForm({
   onOpenChange,
   categories,
 }: ExpenseFormProps) {
-  const { register, handleSubmit, reset } = useForm<InsertExpense>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const form = useForm<InsertExpense>({
+    resolver: zodResolver(insertExpenseSchema),
+    defaultValues: {
+      categoryId: undefined,
+      amount: undefined,
+      description: "",
+    },
+  });
 
   const onSubmit = async (data: InsertExpense) => {
     try {
+      setIsSubmitting(true);
       await fetch("/api/expenses", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          categoryId: parseInt(data.categoryId as unknown as string),
+        }),
       });
       mutate("/api/expenses");
-      toast({ title: "Expense added" });
-      reset();
+      toast({ title: "Expense added successfully" });
+      form.reset();
       onOpenChange(false);
     } catch (error) {
-      toast({ title: "Error adding expense", variant: "destructive" });
+      toast({ 
+        title: "Error adding expense", 
+        description: "Please try again later.",
+        variant: "destructive" 
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -41,37 +62,89 @@ export default function ExpenseForm({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add Expense</DialogTitle>
+          <DialogDescription>
+            Add a new expense to track your spending. Select a category and enter the amount and description.
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Select onValueChange={(value) => register("categoryId").onChange({ target: { value } })}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((category) => (
-                <SelectItem key={category.id} value={category.id.toString()}>
-                  {category.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Input
-            type="number"
-            step="0.01"
-            placeholder="Amount"
-            {...register("amount")}
-          />
-          
-          <Input
-            placeholder="Description"
-            {...register("description")}
-          />
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <Select
+                    onValueChange={(value) => field.onChange(parseInt(value))}
+                    defaultValue={field.value?.toString()}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((category) => (
+                        <SelectItem 
+                          key={category.id} 
+                          value={category.id.toString()}
+                        >
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Amount</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      placeholder="Enter amount"
+                      {...field}
+                      onChange={(e) => field.onChange(parseFloat(e.target.value))}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter description"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" className="w-full">
-            Add Expense
-          </Button>
-        </form>
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Adding..." : "Add Expense"}
+            </Button>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
