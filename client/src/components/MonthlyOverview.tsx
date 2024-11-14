@@ -39,24 +39,6 @@ export default function MonthlyOverview({ expenses, categories }: MonthlyOvervie
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Budget</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalBudget.toFixed(2)}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Expenses</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
-          </CardContent>
-        </Card>
-      </div>
       <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={dailyData}>
@@ -72,6 +54,24 @@ export default function MonthlyOverview({ expenses, categories }: MonthlyOvervie
             />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Total Expenses</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalExpenses.toFixed(2)}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Total Budget</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalBudget.toFixed(2)}</div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

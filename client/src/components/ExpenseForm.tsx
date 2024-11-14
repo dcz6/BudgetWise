@@ -12,7 +12,7 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ExpenseFormProps {
@@ -45,8 +45,8 @@ export default function ExpenseForm({
           date: new Date(expense.date),
         }
       : {
-          categoryId: undefined,
-          amount: undefined,
+          categoryId: categories[0]?.id || 0,
+          amount: 0,
           description: "",
           date: new Date(),
         },
@@ -144,7 +144,7 @@ export default function ExpenseForm({
                   <FormLabel>Category</FormLabel>
                   <Select
                     onValueChange={(value) => field.onChange(parseInt(value))}
-                    defaultValue={field.value?.toString()}
+                    value={field.value?.toString()}
                   >
                     <FormControl>
                       <SelectTrigger>
@@ -179,9 +179,10 @@ export default function ExpenseForm({
                       step="0.01"
                       placeholder="Enter amount"
                       {...field}
+                      value={field.value ?? ""}
                       onChange={(e) => {
                         const value = e.target.value;
-                        field.onChange(value === "" ? undefined : parseFloat(value));
+                        field.onChange(value === "" ? 0 : parseFloat(value));
                       }}
                     />
                   </FormControl>
@@ -200,6 +201,7 @@ export default function ExpenseForm({
                     <Input
                       placeholder="Enter description"
                       {...field}
+                      value={field.value ?? ""}
                     />
                   </FormControl>
                   <FormMessage />
@@ -212,7 +214,14 @@ export default function ExpenseForm({
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? `${expense ? 'Updating' : 'Adding'}...` : `${expense ? 'Update' : 'Add'} Expense`}
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {expense ? 'Updating...' : 'Adding...'}
+                </>
+              ) : (
+                expense ? 'Update' : 'Add'
+              )} Expense
             </Button>
           </form>
         </Form>
