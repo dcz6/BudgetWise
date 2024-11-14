@@ -38,7 +38,7 @@ export default function Dashboard() {
 
         <Card className="p-6">
           <h2 className="text-xl font-semibold mb-4">Monthly Summary</h2>
-          <MonthlyOverview expenses={expenses ?? []} />
+          <MonthlyOverview expenses={expenses ?? []} categories={categories ?? []} />
         </Card>
       </div>
     </div>
