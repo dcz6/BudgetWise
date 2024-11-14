@@ -12,13 +12,23 @@ import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "
 interface CategoryFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  category?: {
+    id: number;
+    name: string;
+    budget: number;
+    color: string;
+  };
 }
 
-export default function CategoryForm({ open, onOpenChange }: CategoryFormProps) {
+export default function CategoryForm({ 
+  open, 
+  onOpenChange, 
+  category 
+}: CategoryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<InsertCategory>({
     resolver: zodResolver(insertCategorySchema),
-    defaultValues: {
+    defaultValues: category ?? {
       name: "",
       budget: undefined,
       color: "#4CAF50",
@@ -28,8 +38,13 @@ export default function CategoryForm({ open, onOpenChange }: CategoryFormProps) 
   const onSubmit = async (data: InsertCategory) => {
     try {
       setIsSubmitting(true);
-      await fetch("/api/categories", {
-        method: "POST",
+      const url = category
+        ? `/api/categories/${category.id}`
+        : "/api/categories";
+      const method = category ? "PUT" : "POST";
+
+      await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
@@ -37,12 +52,12 @@ export default function CategoryForm({ open, onOpenChange }: CategoryFormProps) 
         }),
       });
       mutate("/api/categories");
-      toast({ title: "Category added successfully" });
+      toast({ title: `Category ${category ? 'updated' : 'added'} successfully` });
       form.reset();
       onOpenChange(false);
     } catch (error) {
       toast({ 
-        title: "Error adding category", 
+        title: `Error ${category ? 'updating' : 'adding'} category`, 
         description: "Please try again later.",
         variant: "destructive" 
       });
@@ -55,9 +70,9 @@ export default function CategoryForm({ open, onOpenChange }: CategoryFormProps) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Category</DialogTitle>
+          <DialogTitle>{category ? 'Edit' : 'Add'} Category</DialogTitle>
           <DialogDescription>
-            Create a new budget category to organize your expenses. Set a budget limit and choose a color for visualization.
+            {category ? 'Update' : 'Create a new'} budget category to organize your expenses. Set a budget limit and choose a color for visualization.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -128,7 +143,7 @@ export default function CategoryForm({ open, onOpenChange }: CategoryFormProps) 
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Adding..." : "Add Category"}
+              {isSubmitting ? `${category ? 'Updating' : 'Adding'}...` : `${category ? 'Update' : 'Add'} Category`}
             </Button>
           </form>
         </Form>

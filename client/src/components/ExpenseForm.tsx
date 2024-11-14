@@ -9,33 +9,59 @@ import { toast } from "@/hooks/use-toast";
 import { mutate } from "swr";
 import { useState } from "react";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ExpenseFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   categories: Category[];
+  expense?: {
+    id: number;
+    categoryId: number;
+    amount: number;
+    description: string;
+    date: string;
+  };
 }
 
 export default function ExpenseForm({
   open,
   onOpenChange,
   categories,
+  expense,
 }: ExpenseFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const form = useForm<InsertExpense>({
     resolver: zodResolver(insertExpenseSchema),
-    defaultValues: {
-      categoryId: undefined,
-      amount: undefined,
-      description: "",
-    },
+    defaultValues: expense
+      ? {
+          categoryId: expense.categoryId,
+          amount: expense.amount,
+          description: expense.description,
+          date: new Date(expense.date),
+        }
+      : {
+          categoryId: undefined,
+          amount: undefined,
+          description: "",
+          date: new Date(),
+        },
   });
 
   const onSubmit = async (data: InsertExpense) => {
     try {
       setIsSubmitting(true);
-      await fetch("/api/expenses", {
-        method: "POST",
+      const url = expense
+        ? `/api/expenses/${expense.id}`
+        : "/api/expenses";
+      const method = expense ? "PUT" : "POST";
+
+      await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...data,
@@ -43,12 +69,12 @@ export default function ExpenseForm({
         }),
       });
       mutate("/api/expenses");
-      toast({ title: "Expense added successfully" });
+      toast({ title: `Expense ${expense ? 'updated' : 'added'} successfully` });
       form.reset();
       onOpenChange(false);
     } catch (error) {
       toast({ 
-        title: "Error adding expense", 
+        title: `Error ${expense ? 'updating' : 'adding'} expense`, 
         description: "Please try again later.",
         variant: "destructive" 
       });
@@ -61,13 +87,55 @@ export default function ExpenseForm({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Add Expense</DialogTitle>
+          <DialogTitle>{expense ? 'Edit' : 'Add'} Expense</DialogTitle>
           <DialogDescription>
-            Add a new expense to track your spending. Select a category and enter the amount and description.
+            {expense ? 'Update' : 'Add a new'} expense to track your spending. Select a category and enter the amount and description.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "w-full pl-3 text-left font-normal",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="categoryId"
@@ -141,7 +209,7 @@ export default function ExpenseForm({
               className="w-full"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Adding..." : "Add Expense"}
+              {isSubmitting ? `${expense ? 'Updating' : 'Adding'}...` : `${expense ? 'Update' : 'Add'} Expense`}
             </Button>
           </form>
         </Form>

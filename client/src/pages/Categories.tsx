@@ -3,11 +3,13 @@ import { Card } from "@/components/ui/card";
 import CategoryForm from "../components/CategoryForm";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
-import { Category } from "../../db/schema";
+import { Category } from "../lib/types";
 import { toast } from "@/hooks/use-toast";
+import { Pencil, Trash } from "lucide-react";
 
 export default function Categories() {
   const [isAdding, setIsAdding] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<Category | undefined>();
   const { data: categories } = useSWR<Category[]>("/api/categories");
 
   const handleDelete = async (id: number) => {
@@ -18,6 +20,10 @@ export default function Categories() {
     } catch (error) {
       toast({ title: "Error deleting category", variant: "destructive" });
     }
+  };
+
+  const handleEdit = (category: Category) => {
+    setEditingCategory(category);
   };
 
   return (
@@ -40,18 +46,38 @@ export default function Categories() {
             <p className="text-2xl font-bold mt-2">
               ${Number(category.budget).toFixed(2)}
             </p>
-            <Button
-              variant="destructive"
-              className="mt-4"
-              onClick={() => handleDelete(category.id)}
-            >
-              Delete
-            </Button>
+            <div className="flex gap-2 mt-4">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handleEdit(category)}
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="destructive"
+                size="icon"
+                onClick={() => handleDelete(category.id)}
+              >
+                <Trash className="h-4 w-4" />
+              </Button>
+            </div>
           </Card>
         ))}
       </div>
 
-      <CategoryForm open={isAdding} onOpenChange={setIsAdding} />
+      <CategoryForm 
+        open={isAdding} 
+        onOpenChange={setIsAdding} 
+      />
+
+      {editingCategory && (
+        <CategoryForm
+          open={true}
+          onOpenChange={() => setEditingCategory(undefined)}
+          category={editingCategory}
+        />
+      )}
     </div>
   );
 }

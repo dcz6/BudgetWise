@@ -15,6 +15,10 @@ export const insertExpenseSchema = z.object({
   categoryId: z.number().int().positive("Category is required"),
   amount: z.number().min(0.01, "Amount must be greater than 0"),
   description: z.string().min(1, "Description is required"),
+  date: z.date({
+    required_error: "Date is required",
+    invalid_type_error: "Invalid date format",
+  }),
 });
 
 export type InsertExpense = z.infer<typeof insertExpenseSchema>;
