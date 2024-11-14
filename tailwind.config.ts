@@ -41,10 +41,6 @@ export default {
   				DEFAULT: 'hsl(var(--destructive))',
   				foreground: 'hsl(var(--destructive-foreground))'
   			},
-        warning: {
-          DEFAULT: 'hsl(38, 92%, 50%)', // Orange warning color
-          foreground: 'hsl(38, 92%, 10%)'
-        },
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
