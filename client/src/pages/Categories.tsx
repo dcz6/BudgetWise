@@ -62,7 +62,10 @@ export default function Categories() {
           <h1 className="text-3xl font-bold">Budget Categories</h1>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button onClick={() => setIsAdding(true)}>
+              <Button 
+                onClick={() => setIsAdding(true)}
+                className="transition-all duration-200 hover:shadow-md"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Category
               </Button>
@@ -75,11 +78,14 @@ export default function Categories() {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {categories?.map((category) => (
-            <Card key={category.id} className="p-4">
+            <Card 
+              key={category.id} 
+              className="p-4 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+            >
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-semibold">{category.name}</h3>
                 <div
-                  className="w-4 h-4 rounded-full"
+                  className="w-4 h-4 rounded-full transition-transform duration-200 group-hover:scale-125"
                   style={{ backgroundColor: category.color }}
                 />
               </div>
@@ -93,6 +99,7 @@ export default function Categories() {
                       variant="outline"
                       size="icon"
                       onClick={() => handleEdit(category)}
+                      className="transition-colors duration-200 hover:bg-primary/10"
                     >
                       <Pencil className="h-4 w-4" />
                     </Button>
@@ -109,6 +116,7 @@ export default function Categories() {
                       size="icon"
                       onClick={() => handleDelete(category.id)}
                       disabled={deletingId === category.id}
+                      className="transition-colors duration-200"
                     >
                       {deletingId === category.id ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
