@@ -2,7 +2,8 @@ import { Progress } from "@/components/ui/progress";
 import { Category, Expense } from "../lib/types";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { startOfMonth, endOfMonth } from "date-fns";
+import { startOfMonth, endOfMonth, format } from "date-fns";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface BudgetProgressProps {
   category: Category;
@@ -15,6 +16,19 @@ export default function BudgetProgress({
   expenses,
   selectedMonth,
 }: BudgetProgressProps) {
+  // Handle loading and error states
+  if (!category || !expenses || !selectedMonth) {
+    return (
+      <div className="space-y-2 mb-4">
+        <div className="flex justify-between items-center">
+          <Skeleton className="h-6 w-24" />
+          <Skeleton className="h-4 w-20" />
+        </div>
+        <Skeleton className="h-2 w-full" />
+      </div>
+    );
+  }
+
   const monthStart = startOfMonth(selectedMonth);
   const monthEnd = endOfMonth(selectedMonth);
   
@@ -24,12 +38,12 @@ export default function BudgetProgress({
   });
 
   const total = monthExpenses.reduce((sum, expense) => sum + Number(expense.amount), 0);
-  const percentage = (total / Number(category.budget)) * 100;
+  const percentage = Math.min((total / Number(category.budget)) * 100, 100);
   
   const getProgressColor = (percent: number) => {
-    if (percent >= 90) return "bg-destructive";
-    if (percent >= 75) return "bg-warning";
-    return "bg-primary";
+    if (percent >= 90) return "bg-destructive/80";
+    if (percent >= 75) return "bg-warning/80";
+    return "bg-primary/80";
   };
 
   return (
@@ -38,13 +52,15 @@ export default function BudgetProgress({
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div
-              className="w-3 h-3 rounded-full transition-transform duration-200 group-hover:scale-110"
+              className="w-3 h-3 rounded-full transition-all duration-300 group-hover:scale-110 ring-2 ring-offset-2 ring-offset-background"
               style={{ backgroundColor: category.color }}
             />
-            <span className="font-medium">{category.name}</span>
+            <span className="font-medium transition-colors duration-200 group-hover:text-primary">
+              {category.name}
+            </span>
           </div>
           <span className="text-sm text-muted-foreground">
-            ${total.toFixed(2)} / ${Number(category.budget).toFixed(2)}
+            ${Number(total).toFixed(2)} / ${Number(category.budget).toFixed(2)}
           </span>
         </div>
         <Tooltip>
@@ -57,10 +73,19 @@ export default function BudgetProgress({
                   getProgressColor(percentage)
                 )}
               />
+              <div 
+                className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full"
+                style={{ 
+                  width: `${percentage}%`,
+                  maxWidth: '100%'
+                }}
+              />
             </div>
           </TooltipTrigger>
           <TooltipContent>
-            <p>{percentage.toFixed(1)}% of budget used in {selectedMonth.toLocaleString('default', { month: 'long' })}</p>
+            <p>
+              {percentage.toFixed(1)}% of budget used in {format(selectedMonth, 'MMMM yyyy')}
+            </p>
           </TooltipContent>
         </Tooltip>
       </div>
