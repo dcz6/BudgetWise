@@ -1,12 +1,23 @@
-import { pgTable, text, integer, decimal, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, decimal, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
+
+export const users = pgTable("users", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  email: text("email").notNull(),
+  password: text("password").notNull(),
+  name: text("name").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: uniqueIndex("email_idx").on(table.email),
+}));
 
 export const categories = pgTable("categories", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   name: text("name").notNull(),
   budget: decimal("budget", { precision: 10, scale: 2 }).notNull(),
   color: text("color").notNull().default('#4CAF50'),
+  userId: integer("user_id").references(() => users.id).notNull(),
 });
 
 export const expenses = pgTable("expenses", {
@@ -15,13 +26,22 @@ export const expenses = pgTable("expenses", {
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   description: text("description"),
   date: timestamp("date").notNull().defaultNow(),
+  userId: integer("user_id").references(() => users.id).notNull(),
 });
 
+// User schemas
+export const insertUserSchema = createInsertSchema(users);
+export const selectUserSchema = createSelectSchema(users);
+export type InsertUser = z.infer<typeof insertUserSchema>;
+export type User = z.infer<typeof selectUserSchema>;
+
+// Category schemas
 export const insertCategorySchema = createInsertSchema(categories);
 export const selectCategorySchema = createSelectSchema(categories);
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type Category = z.infer<typeof selectCategorySchema>;
 
+// Expense schemas
 export const insertExpenseSchema = createInsertSchema(expenses);
 export const selectExpenseSchema = createSelectSchema(expenses);
 export type InsertExpense = z.infer<typeof insertExpenseSchema>;

@@ -4,19 +4,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
-import { Menu } from "lucide-react";
+import { LogOut, Menu, User } from "lucide-react";
 import { CommandMenu } from "./CommandMenu";
 import useSWR from "swr";
 import { Category, Expense } from "../lib/types";
 import { startOfMonth, endOfMonth } from "date-fns";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "@/hooks/use-toast";
 
 export default function Navigation() {
   const [location] = useLocation();
   const { data: expenses } = useSWR<Expense[]>("/api/expenses");
   const { data: categories } = useSWR<Category[]>("/api/categories");
+  const { user, logout } = useAuth();
 
   const currentMonth = new Date();
   const monthStart = startOfMonth(currentMonth);
@@ -53,6 +57,22 @@ export default function Navigation() {
     },
   ];
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast({ title: "Logged out successfully" });
+    } catch (error) {
+      toast({ 
+        title: "Error logging out", 
+        variant: "destructive" 
+      });
+    }
+  };
+
+  if (!user) {
+    return null;
+  }
+
   return (
     <nav className="border-b mb-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full">
       <div className="container mx-auto p-4">
@@ -80,6 +100,25 @@ export default function Navigation() {
                 </Link>
               </Button>
             ))}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem className="font-medium">
+                  {user.name}
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Button
               variant="outline"
               className="hidden lg:flex items-center gap-2"
@@ -123,6 +162,14 @@ export default function Navigation() {
                     </Link>
                   </DropdownMenuItem>
                 ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="font-medium">
+                  {user.name}
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="text-destructive">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

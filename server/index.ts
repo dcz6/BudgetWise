@@ -1,14 +1,44 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
+import { registerAuthRoutes } from "./auth";
 import { setupVite, serveStatic } from "./vite";
 import { createServer } from "http";
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
+import passport from "passport";
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 (async () => {
+  // Setup session handling
+  const PostgresqlStore = connectPgSimple(session);
+  app.use(
+    session({
+      store: new PostgresqlStore({
+        conObject: {
+          connectionString: process.env.DATABASE_URL,
+        },
+      }),
+      secret: process.env.SESSION_SECRET || "your-secret-key",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+        secure: process.env.NODE_ENV === "production",
+      },
+    })
+  );
+
+  // Initialize passport
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // Register routes
+  registerAuthRoutes(app);
   registerRoutes(app);
+
   const server = createServer(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -19,17 +49,12 @@ app.use(express.urlencoded({ extended: false }));
     throw err;
   });
 
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client
   const PORT = 5000;
   server.listen(PORT, "0.0.0.0", () => {
     const formattedTime = new Date().toLocaleTimeString("en-US", {
