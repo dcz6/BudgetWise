@@ -41,12 +41,12 @@ export default function ExpenseForm({
       ? {
           categoryId: expense.categoryId,
           amount: expense.amount,
-          description: expense.description || "", // Updated to allow empty description
+          description: expense.description || "",
           date: new Date(expense.date),
         }
       : {
           categoryId: categories[0]?.id || 0,
-          amount: 0,
+          amount: undefined,
           description: "",
           date: new Date(),
         },
@@ -179,10 +179,10 @@ export default function ExpenseForm({
                       step="0.01"
                       placeholder="Enter amount"
                       {...field}
-                      value={field.value ?? ""}
+                      value={field.value === undefined ? "" : field.value}
                       onChange={(e) => {
                         const value = e.target.value;
-                        field.onChange(value === "" ? 0 : parseFloat(value));
+                        field.onChange(value === "" ? undefined : parseFloat(value));
                       }}
                     />
                   </FormControl>
