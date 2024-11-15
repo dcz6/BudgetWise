@@ -31,7 +31,9 @@ export type Category = InsertCategory & { id: number };
 // Expense schemas
 export const insertExpenseSchema = z.object({
   categoryId: z.number().int().positive("Category is required"),
-  amount: z.number().min(0.01, "Amount must be greater than 0"),
+  amount: z.number()
+    .min(0.01, "Amount must be greater than 0")
+    .transform(val => Math.round(val * 100) / 100),
   description: z.string().optional(),
   date: z.date({
     required_error: "Date is required",

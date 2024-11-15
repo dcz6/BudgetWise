@@ -177,12 +177,14 @@ export default function ExpenseForm({
                     <Input
                       type="number"
                       step="0.01"
+                      min="0"
                       placeholder="Enter amount"
                       {...field}
-                      value={field.value === undefined ? "" : field.value}
+                      value={field.value === undefined ? "" : Number(field.value).toFixed(2)}
                       onChange={(e) => {
                         const value = e.target.value;
-                        field.onChange(value === "" ? undefined : parseFloat(value));
+                        const parsedValue = parseFloat(value);
+                        field.onChange(value === "" ? undefined : isNaN(parsedValue) ? 0 : Math.round(parsedValue * 100) / 100);
                       }}
                     />
                   </FormControl>
