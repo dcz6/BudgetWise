@@ -8,7 +8,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { useLocation } from "wouter";
-import { Calculator, Calendar, FolderOpen, LayoutDashboard, Plus } from "lucide-react";
+import { Calculator, FolderOpen, LayoutDashboard, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Category } from "../lib/types";
 import useSWR from "swr";
@@ -29,36 +29,26 @@ export function CommandMenu() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
+  const handleNavigation = (path: string) => {
+    setLocation(path);
+    setOpen(false);
+  };
+
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Navigation">
-          <CommandItem
-            onSelect={() => {
-              setLocation("/");
-              setOpen(false);
-            }}
-          >
+          <CommandItem onSelect={() => handleNavigation("/")}>
             <LayoutDashboard className="mr-2 h-4 w-4" />
             Dashboard
           </CommandItem>
-          <CommandItem
-            onSelect={() => {
-              setLocation("/categories");
-              setOpen(false);
-            }}
-          >
+          <CommandItem onSelect={() => handleNavigation("/categories")}>
             <FolderOpen className="mr-2 h-4 w-4" />
             Categories
           </CommandItem>
-          <CommandItem
-            onSelect={() => {
-              setLocation("/expenses");
-              setOpen(false);
-            }}
-          >
+          <CommandItem onSelect={() => handleNavigation("/expenses")}>
             <Calculator className="mr-2 h-4 w-4" />
             Expenses
           </CommandItem>
@@ -70,10 +60,7 @@ export function CommandMenu() {
           {categories?.map((category) => (
             <CommandItem
               key={category.id}
-              onSelect={() => {
-                setLocation("/expenses");
-                setOpen(false);
-              }}
+              onSelect={() => handleNavigation("/expenses")}
             >
               <div
                 className="mr-2 h-3 w-3 rounded-full"
@@ -87,23 +74,11 @@ export function CommandMenu() {
         <CommandSeparator />
 
         <CommandGroup heading="Actions">
-          <CommandItem
-            onSelect={() => {
-              setLocation("/expenses");
-              // TODO: Open expense form
-              setOpen(false);
-            }}
-          >
+          <CommandItem onSelect={() => handleNavigation("/expenses")}>
             <Plus className="mr-2 h-4 w-4" />
             Add Expense
           </CommandItem>
-          <CommandItem
-            onSelect={() => {
-              setLocation("/categories");
-              // TODO: Open category form
-              setOpen(false);
-            }}
-          >
+          <CommandItem onSelect={() => handleNavigation("/categories")}>
             <Plus className="mr-2 h-4 w-4" />
             Add Category
           </CommandItem>
