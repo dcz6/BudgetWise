@@ -13,6 +13,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { CommandMenu } from "./components/CommandMenu";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -51,6 +52,7 @@ createRoot(document.getElementById("root")!).render(
           </main>
         </div>
         <Toaster />
+        <CommandMenu />
       </SWRConfig>
     </AuthProvider>
   </StrictMode>,
