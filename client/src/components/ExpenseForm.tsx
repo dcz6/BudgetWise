@@ -197,11 +197,10 @@ export default function ExpenseForm({
                       min="0"
                       placeholder="Enter amount"
                       {...field}
-                      value={field.value === undefined ? "" : Number(field.value).toFixed(2)}
+                      value={field.value === undefined ? "" : field.value}
                       onChange={(e) => {
                         const value = e.target.value;
-                        const parsedValue = parseFloat(value);
-                        field.onChange(value === "" ? undefined : isNaN(parsedValue) ? 0 : Math.round(parsedValue * 100) / 100);
+                        field.onChange(value === "" ? undefined : parseFloat(value));
                       }}
                     />
                   </FormControl>
