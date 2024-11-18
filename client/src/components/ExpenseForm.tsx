@@ -63,7 +63,7 @@ export default function ExpenseForm({
           description: "",
           date: new Date(),
           isRecurring: false,
-          recurringType: undefined,
+          recurringType: "monthly",
         },
   });
 
@@ -254,14 +254,14 @@ export default function ExpenseForm({
                 name="recurringType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Recurring Type</FormLabel>
+                    <FormLabel>Frequency</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select recurring type" />
+                          <SelectValue placeholder="Select frequency" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
