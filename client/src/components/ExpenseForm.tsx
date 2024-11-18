@@ -8,7 +8,15 @@ import { InsertExpense, insertExpenseSchema, Category } from "../lib/types";
 import { toast } from "@/hooks/use-toast";
 import { mutate } from "swr";
 import { useState } from "react";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
+import { 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormControl, 
+  FormMessage, 
+  FormDescription, 
+  Form 
+} from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { format } from "date-fns";

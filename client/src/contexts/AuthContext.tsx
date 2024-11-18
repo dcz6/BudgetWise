@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User } from "@/lib/types";
 
 type AuthContextType = {
@@ -11,13 +11,13 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    checkAuth();
-  }, []);
 
   const checkAuth = async () => {
     try {
@@ -32,6 +32,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const login = async (email: string, password: string) => {
     const response = await fetch("/api/auth/login", {
@@ -69,8 +73,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   };
 
+  const value = {
+    user,
+    isLoading,
+    login,
+    register,
+    logout,
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
