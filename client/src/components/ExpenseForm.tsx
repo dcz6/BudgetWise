@@ -14,6 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 interface ExpenseFormProps {
   open: boolean;
@@ -25,6 +26,8 @@ interface ExpenseFormProps {
     amount: number;
     description: string;
     date: string;
+    isRecurring?: boolean;
+    recurringType?: 'monthly' | 'annual';
   };
 }
 
@@ -43,12 +46,16 @@ export default function ExpenseForm({
           amount: expense.amount,
           description: expense.description || "",
           date: new Date(expense.date),
+          isRecurring: expense.isRecurring || false,
+          recurringType: expense.recurringType,
         }
       : {
           categoryId: categories[0]?.id || 0,
           amount: undefined,
           description: "",
           date: new Date(),
+          isRecurring: false,
+          recurringType: undefined,
         },
   });
 
@@ -82,6 +89,8 @@ export default function ExpenseForm({
       setIsSubmitting(false);
     }
   };
+
+  const watchIsRecurring = form.watch("isRecurring");
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -210,6 +219,54 @@ export default function ExpenseForm({
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="isRecurring"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">Recurring Expense</FormLabel>
+                    <FormDescription>
+                      Enable if this is a recurring expense
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            {watchIsRecurring && (
+              <FormField
+                control={form.control}
+                name="recurringType"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Recurring Type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select recurring type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="monthly">Monthly</SelectItem>
+                        <SelectItem value="annual">Annual</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <Button 
               type="submit" 

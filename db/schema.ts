@@ -1,4 +1,4 @@
-import { pgTable, text, integer, decimal, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, integer, decimal, timestamp, uniqueIndex, boolean } from "drizzle-orm/pg-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -27,6 +27,9 @@ export const expenses = pgTable("expenses", {
   description: text("description"),
   date: timestamp("date").notNull().defaultNow(),
   userId: integer("user_id").references(() => users.id).notNull(),
+  isRecurring: boolean("is_recurring").notNull().default(false),
+  recurringType: text("recurring_type"), // 'monthly' or 'annual'
+  nextRecurringDate: timestamp("next_recurring_date"),
 });
 
 // User schemas
@@ -42,7 +45,9 @@ export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type Category = z.infer<typeof selectCategorySchema>;
 
 // Expense schemas
-export const insertExpenseSchema = createInsertSchema(expenses);
+export const insertExpenseSchema = createInsertSchema(expenses).extend({
+  recurringType: z.enum(['monthly', 'annual']).optional(),
+});
 export const selectExpenseSchema = createSelectSchema(expenses);
 export type InsertExpense = z.infer<typeof insertExpenseSchema>;
 export type Expense = z.infer<typeof selectExpenseSchema>;
