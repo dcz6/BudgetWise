@@ -28,41 +28,71 @@ export function DashboardMockup() {
         </div>
       </div>
       <div className="h-48 rounded overflow-hidden">
-        <div className="w-full h-full relative">
-          <div className="absolute inset-0 grid place-items-center">
-            <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
-              <defs>
-                <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0.2"/>
-                  <stop offset="100%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0"/>
-                </linearGradient>
-              </defs>
-              <path
-                d="M0 180 C100 120, 200 160, 400 60 L400 200 L0 200 Z"
-                fill="url(#area-gradient)"
-              />
-              <path
-                d="M0 180 C100 120, 200 160, 400 60"
-                fill="none"
-                stroke="hsl(142.1 76.2% 36.3%)"
-                strokeWidth="2"
-              />
-              {/* Data points */}
-              <circle cx="0" cy="180" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-              <circle cx="100" cy="120" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-              <circle cx="200" cy="160" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-              <circle cx="400" cy="60" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-            </svg>
+        <div className="w-full h-full relative p-4">
+          <div className="absolute left-0 top-0 bottom-0 w-12 flex flex-col justify-between text-xs text-muted-foreground py-4">
+            <span>$800</span>
+            <span>$600</span>
+            <span>$400</span>
+            <span>$200</span>
+            <span>$0</span>
           </div>
-          <div className="absolute inset-0 grid grid-cols-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="border-l border-border/10 h-full first:border-l-0" />
-            ))}
+          <div className="absolute right-0 left-12 bottom-0 h-6 flex justify-between text-xs text-muted-foreground px-4">
+            <span>Week 1</span>
+            <span>Week 2</span>
+            <span>Week 3</span>
+            <span>Week 4</span>
           </div>
-          <div className="absolute inset-0 grid grid-rows-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="border-t border-border/10 w-full first:border-t-0" />
-            ))}
+          <div className="absolute inset-0 mt-4 ml-12 mr-4 mb-6">
+            <div className="relative w-full h-full">
+              <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0.2"/>
+                    <stop offset="100%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0"/>
+                  </linearGradient>
+                </defs>
+                <g className="grid">
+                  {[...Array(5)].map((_, i) => (
+                    <line
+                      key={`h-${i}`}
+                      x1="0"
+                      y1={i * 50}
+                      x2="400"
+                      y2={i * 50}
+                      stroke="hsl(var(--border))"
+                      strokeOpacity="0.5"
+                      strokeDasharray="4 4"
+                    />
+                  ))}
+                  {[...Array(4)].map((_, i) => (
+                    <line
+                      key={`v-${i}`}
+                      x1={i * 133}
+                      y1="0"
+                      x2={i * 133}
+                      y2="200"
+                      stroke="hsl(var(--border))"
+                      strokeOpacity="0.5"
+                      strokeDasharray="4 4"
+                    />
+                  ))}
+                </g>
+                <path
+                  d="M0 180 C100 120, 200 160, 400 60 L400 200 L0 200 Z"
+                  fill="url(#area-gradient)"
+                />
+                <path
+                  d="M0 180 C100 120, 200 160, 400 60"
+                  fill="none"
+                  stroke="hsl(142.1 76.2% 36.3%)"
+                  strokeWidth="2"
+                />
+                <circle cx="0" cy="180" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+                <circle cx="100" cy="120" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+                <circle cx="200" cy="160" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+                <circle cx="400" cy="60" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+              </svg>
+            </div>
           </div>
         </div>
       </div>
