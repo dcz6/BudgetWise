@@ -8,11 +8,14 @@ export default function LandingPage() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 pt-20 pb-16 text-center">
         <div className="space-y-6 max-w-4xl mx-auto">
+          <div className="text-2xl font-semibold text-primary animate-in slide-in-from-bottom duration-500">
+            Welcome to BudgetWise
+          </div>
           <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent mb-6 animate-in slide-in-from-bottom duration-500">
-            Smart Budget Management Made Simple
+            Smart Budget Management Made Simple with BudgetWise
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-in slide-in-from-bottom duration-500 delay-150">
-            Take control of your finances with our intuitive budget tracking and analytics platform. 
+            Take control of your finances with BudgetWise's intuitive tracking and analytics platform. 
             Monitor expenses, set budgets, and achieve your financial goals with ease.
           </p>
           <div className="flex gap-4 justify-center items-center flex-wrap animate-in slide-in-from-bottom duration-500 delay-300">
@@ -22,7 +25,7 @@ export default function LandingPage() {
               className="group transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               <Link href="/register">
-                Get Started Free
+                Try BudgetWise Free
                 <Sparkles className="ml-2 h-4 w-4 transition-transform group-hover:rotate-12" />
               </Link>
             </Button>
@@ -48,9 +51,9 @@ export default function LandingPage() {
             <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
               <Wallet className="h-6 w-6 text-primary transition-transform duration-300 group-hover:rotate-12" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Expense Tracking</h3>
+            <h3 className="text-xl font-semibold mb-2">Smart Tracking</h3>
             <p className="text-muted-foreground">
-              Log and categorize your daily expenses effortlessly. Stay on top of your spending with our intuitive interface.
+              BudgetWise makes expense tracking effortless. Stay on top of your spending with our intuitive interface.
             </p>
           </div>
 
@@ -80,7 +83,7 @@ export default function LandingPage() {
             </div>
             <h3 className="text-xl font-semibold mb-2">Bank-Grade Security</h3>
             <p className="text-muted-foreground">
-              Rest easy knowing your financial data is protected with industry-leading security standards.
+              Rest easy knowing your financial data is protected with BudgetWise's industry-leading security standards.
             </p>
           </div>
         </div>
@@ -89,7 +92,7 @@ export default function LandingPage() {
       {/* CTA Section */}
       <div className="container mx-auto px-4 py-16 text-center">
         <div className="max-w-3xl mx-auto space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Master Your Finances?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Master Your Finances with BudgetWise?</h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Join thousands of users who are already saving more and spending smarter with our powerful budgeting tools.
           </p>
