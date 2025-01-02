@@ -117,7 +117,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="p-6 transition-all duration-200 hover:shadow-lg">
+        <Card className="budget-overview p-6 transition-all duration-200 hover:shadow-lg">
           <h2 className="text-xl font-semibold mb-4">Budget Overview</h2>
           {isLoading ? (
             <div className="space-y-4">
@@ -155,7 +155,7 @@ export default function Dashboard() {
           )}
         </Card>
 
-        <Card className="p-6 transition-all duration-200 hover:shadow-lg">
+        <Card className="monthly-summary p-6 transition-all duration-200 hover:shadow-lg">
           <h2 className="text-xl font-semibold mb-4">Monthly Summary</h2>
           {isLoading ? (
             <div className="space-y-6">
