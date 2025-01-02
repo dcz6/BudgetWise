@@ -28,7 +28,7 @@ export default function Register() {
     try {
       setIsSubmitting(true);
       await register(data.email, data.password, data.name);
-      setLocation("/");
+      setLocation("/dashboard");
     } catch (error) {
       toast({ 
         title: "Registration failed", 
