@@ -13,6 +13,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import LandingPage from "./pages/LandingPage";
 import { CommandMenu } from "./components/CommandMenu";
 
 createRoot(document.getElementById("root")!).render(
@@ -29,11 +30,15 @@ createRoot(document.getElementById("root")!).render(
       >
         <div className="min-h-screen bg-background text-foreground">
           <Navigation />
-          <main className="py-6">
+          <main>
             <Switch>
+              {/* Public routes */}
+              <Route path="/" component={LandingPage} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/">
+
+              {/* Protected routes */}
+              <Route path="/dashboard">
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
