@@ -28,7 +28,11 @@ export default function Register() {
     try {
       setIsSubmitting(true);
       await register(data.email, data.password, data.name);
-      setLocation("/");
+      toast({ 
+        title: "Registration successful", 
+        description: "Welcome to BudgetWise!" 
+      });
+      setLocation("/dashboard");
     } catch (error) {
       toast({ 
         title: "Registration failed", 
@@ -61,6 +65,7 @@ export default function Register() {
                   <Input
                     placeholder="Enter your name"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -79,6 +84,7 @@ export default function Register() {
                     type="email"
                     placeholder="Enter your email"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -97,6 +103,7 @@ export default function Register() {
                     type="password"
                     placeholder="Create a password"
                     {...field}
+                    disabled={isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
