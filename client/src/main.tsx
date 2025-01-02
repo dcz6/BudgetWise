@@ -15,7 +15,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CommandMenu } from "./components/CommandMenu";
 import LandingPage from "./pages/LandingPage";
-import OnboardingTour from "./components/OnboardingTour";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -39,7 +38,6 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/dashboard">
               <ProtectedRoute>
                 <Navigation />
-                <OnboardingTour />
                 <main className="py-6">
                   <Dashboard />
                 </main>
@@ -67,5 +65,5 @@ createRoot(document.getElementById("root")!).render(
         <CommandMenu />
       </SWRConfig>
     </AuthProvider>
-  </StrictMode>
+  </StrictMode>,
 );
