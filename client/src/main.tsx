@@ -14,7 +14,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CommandMenu } from "./components/CommandMenu";
-import Landing from "./pages/Landing";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -30,12 +29,11 @@ createRoot(document.getElementById("root")!).render(
       >
         <div className="min-h-screen bg-background text-foreground">
           <Navigation />
-          <main>
+          <main className="py-6">
             <Switch>
-              <Route path="/" component={Landing} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/dashboard">
+              <Route path="/">
                 <ProtectedRoute>
                   <Dashboard />
                 </ProtectedRoute>
