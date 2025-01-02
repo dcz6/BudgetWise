@@ -104,7 +104,7 @@ export function DashboardMockup() {
           </div>
           <span>$450 / $600</span>
         </div>
-        <div className="h-2 rounded-full bg-green-500 w-[75%]" />
+        <div className="h-2 rounded-full bg-green-500 w-[75%] border border-border" />
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-blue-500" />
@@ -112,7 +112,7 @@ export function DashboardMockup() {
           </div>
           <span>$120 / $200</span>
         </div>
-        <div className="h-2 rounded-full bg-blue-500 w-[60%]" />
+        <div className="h-2 rounded-full bg-blue-500 w-[60%] border border-border" />
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-purple-500" />
@@ -120,7 +120,7 @@ export function DashboardMockup() {
           </div>
           <span>$180 / $300</span>
         </div>
-        <div className="h-2 rounded-full bg-purple-500 w-[60%]" />
+        <div className="h-2 rounded-full bg-purple-500 w-[60%] border border-border" />
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-orange-500" />
@@ -128,7 +128,7 @@ export function DashboardMockup() {
           </div>
           <span>$220 / $250</span>
         </div>
-        <div className="h-2 rounded-full bg-orange-500 w-[88%]" />
+        <div className="h-2 rounded-full bg-orange-500 w-[88%] border border-border" />
       </div>
     </div>
   );
