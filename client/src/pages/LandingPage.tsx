@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Screenshot, DashboardMockup, CategoryMockup, ExpensesMockup } from "@/components/ui/screenshots";
 import { Link } from "wouter";
 import {
   Card,
@@ -37,6 +38,25 @@ export default function LandingPage() {
           </Link>
         </div>
       </motion.div>
+
+      {/* Screenshots Section */}
+      <div className="container mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-center mb-12">See BudgetWise in Action</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <Screenshot 
+            title="Track your spending with our Dashboard"
+            mockup={<DashboardMockup />}
+          />
+          <Screenshot 
+            title="Manage your budget categories"
+            mockup={<CategoryMockup />}
+          />
+          <Screenshot 
+            title="Keep track of every expense"
+            mockup={<ExpensesMockup />}
+          />
+        </div>
+      </div>
 
       {/* Features Section */}
       <div className="container mx-auto px-4 py-16">
