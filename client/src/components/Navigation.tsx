@@ -38,7 +38,7 @@ export default function Navigation() {
   });
 
   const routes = [
-    { path: "/", label: "Dashboard" },
+    { path: "/dashboard", label: "Dashboard" },
     { 
       path: "/categories", 
       label: "Categories",
