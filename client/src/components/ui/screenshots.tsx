@@ -27,7 +27,45 @@ export function DashboardMockup() {
           <div className="w-24 h-8 rounded bg-primary/10" />
         </div>
       </div>
-      <div className="h-48 rounded bg-gradient-to-r from-primary/10 to-primary/5" />
+      <div className="h-48 rounded overflow-hidden">
+        <div className="w-full h-full relative">
+          <div className="absolute inset-0 grid place-items-center">
+            <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0.2"/>
+                  <stop offset="100%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0"/>
+                </linearGradient>
+              </defs>
+              <path
+                d="M0 180 C100 120, 200 160, 400 60 L400 200 L0 200 Z"
+                fill="url(#area-gradient)"
+              />
+              <path
+                d="M0 180 C100 120, 200 160, 400 60"
+                fill="none"
+                stroke="hsl(142.1 76.2% 36.3%)"
+                strokeWidth="2"
+              />
+              {/* Data points */}
+              <circle cx="0" cy="180" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+              <circle cx="100" cy="120" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+              <circle cx="200" cy="160" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+              <circle cx="400" cy="60" r="3" fill="hsl(142.1 76.2% 36.3%)" />
+            </svg>
+          </div>
+          <div className="absolute inset-0 grid grid-cols-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="border-l border-border/10 h-full first:border-l-0" />
+            ))}
+          </div>
+          <div className="absolute inset-0 grid grid-rows-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="border-t border-border/10 w-full first:border-t-0" />
+            ))}
+          </div>
+        </div>
+      </div>
       <div className="space-y-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
