@@ -42,19 +42,42 @@ export default function LandingPage() {
       {/* Screenshots Section */}
       <div className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-12">See BudgetWise in Action</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          <Screenshot 
-            title="Track your spending with our Dashboard"
-            mockup={<DashboardMockup />}
-          />
-          <Screenshot 
-            title="Manage your budget categories"
-            mockup={<CategoryMockup />}
-          />
-          <Screenshot 
-            title="Keep track of every expense"
-            mockup={<ExpensesMockup />}
-          />
+        <div className="space-y-24 max-w-4xl mx-auto">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold">Dashboard</h3>
+            <p className="text-muted-foreground mb-6">
+              Get a comprehensive overview of your finances with our intuitive dashboard. 
+              Track spending patterns, monitor budget progress, and visualize your financial health at a glance.
+            </p>
+            <Screenshot 
+              title="Track your spending with our Dashboard"
+              mockup={<DashboardMockup />}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold">Categories</h3>
+            <p className="text-muted-foreground mb-6">
+              Organize your spending with customizable budget categories. 
+              Set monthly limits and track progress for each spending category to maintain financial discipline.
+            </p>
+            <Screenshot 
+              title="Manage your budget categories"
+              mockup={<CategoryMockup />}
+            />
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold">Expenses</h3>
+            <p className="text-muted-foreground mb-6">
+              Log and manage your expenses effortlessly. 
+              View detailed transaction history, filter by categories, and keep your spending in check.
+            </p>
+            <Screenshot 
+              title="Keep track of every expense"
+              mockup={<ExpensesMockup />}
+            />
+          </div>
         </div>
       </div>
 
