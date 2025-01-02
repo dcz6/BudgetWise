@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { CommandMenu } from "./components/CommandMenu";
+import LandingPage from "./pages/LandingPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -28,28 +29,37 @@ createRoot(document.getElementById("root")!).render(
         }}
       >
         <div className="min-h-screen bg-background text-foreground">
-          <Navigation />
-          <main className="py-6">
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/">
-                <ProtectedRoute>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/" component={LandingPage} />
+
+            {/* Protected Routes */}
+            <Route path="/dashboard">
+              <ProtectedRoute>
+                <Navigation />
+                <main className="py-6">
                   <Dashboard />
-                </ProtectedRoute>
-              </Route>
-              <Route path="/categories">
-                <ProtectedRoute>
+                </main>
+              </ProtectedRoute>
+            </Route>
+            <Route path="/categories">
+              <ProtectedRoute>
+                <Navigation />
+                <main className="py-6">
                   <Categories />
-                </ProtectedRoute>
-              </Route>
-              <Route path="/expenses">
-                <ProtectedRoute>
+                </main>
+              </ProtectedRoute>
+            </Route>
+            <Route path="/expenses">
+              <ProtectedRoute>
+                <Navigation />
+                <main className="py-6">
                   <Expenses />
-                </ProtectedRoute>
-              </Route>
-            </Switch>
-          </main>
+                </main>
+              </ProtectedRoute>
+            </Route>
+          </Switch>
         </div>
         <Toaster />
         <CommandMenu />
