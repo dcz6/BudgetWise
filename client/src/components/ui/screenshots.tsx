@@ -104,7 +104,7 @@ export function DashboardMockup() {
           </div>
           <span>$450 / $600</span>
         </div>
-        <div className="h-2.5 rounded-full bg-green-500 w-[75%] border border-black" style={{ backgroundColor: 'white' }}>
+        <div className="h-2.5 rounded-full bg-green-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-green-500 w-[75%]" />
         </div>
         <div className="flex justify-between items-center">
