@@ -21,10 +21,6 @@ export function DashboardMockup() {
     <div className="p-4 space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Monthly Overview</h2>
-        <div className="flex gap-2">
-          <div className="w-24 h-8 rounded bg-primary/10" />
-          <div className="w-24 h-8 rounded bg-primary/10" />
-        </div>
       </div>
       <div className="h-48 rounded overflow-hidden">
         <div className="w-full h-full relative p-4">
