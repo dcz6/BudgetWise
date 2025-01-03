@@ -20,7 +20,7 @@ export default function LandingPage() {
         className="container mx-auto px-4 pt-20 pb-16 text-center"
       >
         <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-          Master Your Finances with BudgetWise
+          Master Your Finances with DNA Budget
         </h1>
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
           Take control of your financial future with our intuitive budget tracking and management tools.
@@ -41,7 +41,7 @@ export default function LandingPage() {
 
       {/* Screenshots Section */}
       <div className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">See BudgetWise in Action</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">See DNA Budget in Action</h2>
         <div className="space-y-24 max-w-4xl mx-auto">
           <div className="space-y-4">
             <h3 className="text-2xl font-semibold">Dashboard</h3>
