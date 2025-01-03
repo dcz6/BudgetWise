@@ -77,7 +77,7 @@ export function DashboardMockup() {
           </div>
           <span>$600 / $750</span>
         </div>
-        <div className="h-2.5 rounded-full bg-green-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
+        <div className="h-2.5 rounded-full bg-green-500 w-full border border-gray-200" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-green-500 w-[80%]" />
         </div>
         <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export function DashboardMockup() {
           </div>
           <span>$170 / $200</span>
         </div>
-        <div className="h-2.5 rounded-full bg-blue-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
+        <div className="h-2.5 rounded-full bg-blue-500 w-full border border-gray-200" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-blue-500 w-[85%]" />
         </div>
         <div className="flex justify-between items-center">
@@ -97,7 +97,7 @@ export function DashboardMockup() {
           </div>
           <span>$145 / $300</span>
         </div>
-        <div className="h-2.5 rounded-full bg-purple-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
+        <div className="h-2.5 rounded-full bg-purple-500 w-full border border-gray-200" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-purple-500 w-[48%]" />
         </div>
         <div className="flex justify-between items-center">
@@ -107,7 +107,7 @@ export function DashboardMockup() {
           </div>
           <span>$220 / $250</span>
         </div>
-        <div className="h-2.5 rounded-full bg-orange-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
+        <div className="h-2.5 rounded-full bg-orange-500 w-full border border-gray-200" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-orange-500 w-[88%]" />
         </div>
       </div>
