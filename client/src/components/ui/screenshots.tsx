@@ -102,37 +102,37 @@ export function DashboardMockup() {
             <div className="w-3 h-3 rounded-full bg-green-500" />
             <span>Groceries</span>
           </div>
-          <span>$450 / $600</span>
+          <span>$599.25 / $750.00</span>
         </div>
         <div className="h-2.5 rounded-full bg-green-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
-          <div className="h-full rounded-full bg-green-500 w-[75%]" />
+          <div className="h-full rounded-full bg-green-500 w-[80%]" />
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-blue-500" />
-            <span>Entertainment</span>
+            <span>Transportation</span>
           </div>
-          <span>$120 / $200</span>
+          <span>$170.24 / $200.00</span>
         </div>
         <div className="h-2.5 rounded-full bg-blue-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
-          <div className="h-full rounded-full bg-blue-500 w-[60%]" />
+          <div className="h-full rounded-full bg-blue-500 w-[85%]" />
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-purple-500" />
-            <span>Transportation</span>
+            <span>Entertainment</span>
           </div>
-          <span>$180 / $300</span>
+          <span>$145.50 / $300.00</span>
         </div>
         <div className="h-2.5 rounded-full bg-purple-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
-          <div className="h-full rounded-full bg-purple-500 w-[60%]" />
+          <div className="h-full rounded-full bg-purple-500 w-[48%]" />
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded-full bg-orange-500" />
             <span>Utilities</span>
           </div>
-          <span>$220 / $250</span>
+          <span>$220.00 / $250.00</span>
         </div>
         <div className="h-2.5 rounded-full bg-orange-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-orange-500 w-[88%]" />
@@ -150,23 +150,23 @@ export function CategoryMockup() {
           <div className="w-3 h-3 rounded-full bg-green-500" />
           <span>Groceries</span>
         </div>
-        <p className="text-2xl font-bold">$600</p>
+        <p className="text-2xl font-bold">$750.00</p>
         <p className="text-sm text-muted-foreground">Monthly Budget</p>
       </div>
       <div className="p-4 border rounded-lg space-y-2">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-blue-500" />
-          <span>Entertainment</span>
+          <span>Transportation</span>
         </div>
-        <p className="text-2xl font-bold">$200</p>
+        <p className="text-2xl font-bold">$200.00</p>
         <p className="text-sm text-muted-foreground">Monthly Budget</p>
       </div>
       <div className="p-4 border rounded-lg space-y-2">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-purple-500" />
-          <span>Transportation</span>
+          <span>Entertainment</span>
         </div>
-        <p className="text-2xl font-bold">$300</p>
+        <p className="text-2xl font-bold">$300.00</p>
         <p className="text-sm text-muted-foreground">Monthly Budget</p>
       </div>
       <div className="p-4 border rounded-lg space-y-2">
@@ -174,7 +174,7 @@ export function CategoryMockup() {
           <div className="w-3 h-3 rounded-full bg-orange-500" />
           <span>Utilities</span>
         </div>
-        <p className="text-2xl font-bold">$250</p>
+        <p className="text-2xl font-bold">$250.00</p>
         <p className="text-sm text-muted-foreground">Monthly Budget</p>
       </div>
     </div>
@@ -193,12 +193,12 @@ export function ExpensesMockup() {
         </div>
         <div className="divide-y">
           {[
-            { date: "2024-01-15", category: "Groceries", description: "Weekly groceries", amount: 120 },
-            { date: "2024-01-14", category: "Entertainment", description: "Movie tickets", amount: 30 },
-            { date: "2024-01-14", category: "Transportation", description: "Monthly bus pass", amount: 85 },
-            { date: "2024-01-13", category: "Utilities", description: "Electricity bill", amount: 95 },
-            { date: "2024-01-12", category: "Groceries", description: "Fresh produce", amount: 45 },
-            { date: "2024-01-11", category: "Entertainment", description: "Streaming service", amount: 15 },
+            { date: "2024-01-15", category: "Groceries", description: "Weekly groceries", amount: 299.25 },
+            { date: "2024-01-14", category: "Groceries", description: "Fresh produce", amount: 300.00 },
+            { date: "2024-01-14", category: "Transportation", description: "Monthly transit pass", amount: 170.24 },
+            { date: "2024-01-13", category: "Utilities", description: "Electricity bill", amount: 220.00 },
+            { date: "2024-01-12", category: "Entertainment", description: "Movie tickets", amount: 85.50 },
+            { date: "2024-01-11", category: "Entertainment", description: "Streaming service", amount: 60.00 },
           ].map((expense, i) => (
             <div key={i} className="grid grid-cols-4 gap-4 p-3">
               <div>{expense.date}</div>
