@@ -8,8 +8,19 @@ import connectPgSimple from "connect-pg-simple";
 import passport from "passport";
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: false, limit: '50mb' }));
+
+// Basic rate limiting
+const rateLimit = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000 // limit each IP to 1000 requests per windowMs
+};
+
+app.use((req, res, next) => {
+  res.setHeader('X-RateLimit-Limit', rateLimit.max);
+  next();
+});
 
 (async () => {
   // Setup session handling
@@ -54,12 +65,12 @@ app.use(express.urlencoded({ extended: false }));
   } else {
     const path = await import("path");
     const __dirname = path.dirname(new URL(import.meta.url).pathname);
-    
+
     app.use(express.static(path.resolve(__dirname, "../dist/public")));
-    
+
     // Handle API routes
     app.use("/api", (req, res, next) => next());
-    
+
     // Serve index.html for client-side routing
     app.get("*", (_req, res) => {
       res.sendFile(path.resolve(__dirname, "../dist/public/index.html"));
