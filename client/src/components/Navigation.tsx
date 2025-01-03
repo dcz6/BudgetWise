@@ -78,7 +78,7 @@ export default function Navigation() {
       <div className="container mx-auto p-4">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Budget Tracker
+            DNA Budget
           </h1>
           
           {/* Desktop Navigation */}
