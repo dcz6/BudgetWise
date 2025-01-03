@@ -36,10 +36,11 @@ export function DashboardMockup() {
             <span>$0</span>
           </div>
           <div className="absolute right-0 left-12 bottom-0 h-6 flex justify-between text-xs text-muted-foreground px-4">
-            <span>Week 1</span>
-            <span>Week 2</span>
-            <span>Week 3</span>
-            <span>Week 4</span>
+            <span>Jan 11</span>
+            <span>Jan 12</span>
+            <span>Jan 13</span>
+            <span>Jan 14</span>
+            <span>Jan 15</span>
           </div>
           <div className="absolute inset-0 mt-4 ml-12 mr-4 mb-6">
             <div className="relative w-full h-full">
@@ -59,10 +60,12 @@ export function DashboardMockup() {
                   ))}
                 </g>
                 <path
-                  d="M0 160 L50 150 L100 155 L150 145 L200 40 L250 140 L300 80 L350 140 L400 130"
+                  d="M0 120 C20 120, 30 80, 50 80 C70 80, 80 160, 100 160 C120 160, 130 40, 150 40 C170 40, 180 120, 200 120"
                   fill="none"
                   stroke="hsl(142.1 76.2% 36.3%)"
-                  strokeWidth="2"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>
