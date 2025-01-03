@@ -102,7 +102,7 @@ export function DashboardMockup() {
             <div className="w-3 h-3 rounded-full bg-green-500" />
             <span>Groceries</span>
           </div>
-          <span>$599.25 / $750.00</span>
+          <span>$600 / $750</span>
         </div>
         <div className="h-2.5 rounded-full bg-green-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-green-500 w-[80%]" />
@@ -112,7 +112,7 @@ export function DashboardMockup() {
             <div className="w-3 h-3 rounded-full bg-blue-500" />
             <span>Transportation</span>
           </div>
-          <span>$170.24 / $200.00</span>
+          <span>$170 / $200</span>
         </div>
         <div className="h-2.5 rounded-full bg-blue-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-blue-500 w-[85%]" />
@@ -122,7 +122,7 @@ export function DashboardMockup() {
             <div className="w-3 h-3 rounded-full bg-purple-500" />
             <span>Entertainment</span>
           </div>
-          <span>$145.50 / $300.00</span>
+          <span>$145 / $300</span>
         </div>
         <div className="h-2.5 rounded-full bg-purple-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-purple-500 w-[48%]" />
@@ -132,7 +132,7 @@ export function DashboardMockup() {
             <div className="w-3 h-3 rounded-full bg-orange-500" />
             <span>Utilities</span>
           </div>
-          <span>$220.00 / $250.00</span>
+          <span>$220 / $250</span>
         </div>
         <div className="h-2.5 rounded-full bg-orange-500 w-full border border-black" style={{ backgroundColor: 'white' }}>
           <div className="h-full rounded-full bg-orange-500 w-[88%]" />
@@ -193,12 +193,12 @@ export function ExpensesMockup() {
         </div>
         <div className="divide-y">
           {[
-            { date: "2024-01-15", category: "Groceries", description: "Weekly groceries", amount: 299.25 },
-            { date: "2024-01-14", category: "Groceries", description: "Fresh produce", amount: 300.00 },
-            { date: "2024-01-14", category: "Transportation", description: "Monthly transit pass", amount: 170.24 },
-            { date: "2024-01-13", category: "Utilities", description: "Electricity bill", amount: 220.00 },
-            { date: "2024-01-12", category: "Entertainment", description: "Movie tickets", amount: 85.50 },
-            { date: "2024-01-11", category: "Entertainment", description: "Streaming service", amount: 60.00 },
+            { date: "2024-01-15", category: "Groceries", description: "Weekly groceries", amount: 300 },
+            { date: "2024-01-14", category: "Groceries", description: "Fresh produce", amount: 300 },
+            { date: "2024-01-14", category: "Transportation", description: "Monthly transit pass", amount: 170 },
+            { date: "2024-01-13", category: "Utilities", description: "Electricity bill", amount: 220 },
+            { date: "2024-01-12", category: "Entertainment", description: "Movie tickets", amount: 85 },
+            { date: "2024-01-11", category: "Entertainment", description: "Streaming service", amount: 60 },
           ].map((expense, i) => (
             <div key={i} className="grid grid-cols-4 gap-4 p-3">
               <div>{expense.date}</div>
