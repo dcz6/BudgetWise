@@ -52,7 +52,11 @@ app.use(express.urlencoded({ extended: false }));
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    app.use(express.static("dist/public"));
+    // Serve index.html for all routes in production
+    app.get("*", (_req, res) => {
+      res.sendFile("dist/public/index.html", { root: "." });
+    });
   }
 
   const PORT = 5000;
