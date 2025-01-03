@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 
 interface ScreenshotProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -45,52 +44,26 @@ export function DashboardMockup() {
           <div className="absolute inset-0 mt-4 ml-12 mr-4 mb-6">
             <div className="relative w-full h-full">
               <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="area-gradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0.2"/>
-                    <stop offset="100%" stopColor="hsl(142.1 76.2% 36.3%)" stopOpacity="0"/>
-                  </linearGradient>
-                </defs>
                 <g className="grid">
-                  {[...Array(5)].map((_, i) => (
+                  {[...Array(6)].map((_, i) => (
                     <line
                       key={`h-${i}`}
                       x1="0"
-                      y1={i * 50}
+                      y1={i * 40}
                       x2="400"
-                      y2={i * 50}
+                      y2={i * 40}
                       stroke="hsl(var(--border))"
-                      strokeOpacity="0.5"
-                      strokeDasharray="4 4"
-                    />
-                  ))}
-                  {[...Array(4)].map((_, i) => (
-                    <line
-                      key={`v-${i}`}
-                      x1={i * 133}
-                      y1="0"
-                      x2={i * 133}
-                      y2="200"
-                      stroke="hsl(var(--border))"
-                      strokeOpacity="0.5"
-                      strokeDasharray="4 4"
+                      strokeOpacity="0.2"
+                      strokeDasharray="2 2"
                     />
                   ))}
                 </g>
                 <path
-                  d="M0 180 C100 120, 200 160, 400 60 L400 200 L0 200 Z"
-                  fill="url(#area-gradient)"
-                />
-                <path
-                  d="M0 180 C100 120, 200 160, 400 60"
+                  d="M0 160 L50 150 L100 155 L150 145 L200 40 L250 140 L300 80 L350 140 L400 130"
                   fill="none"
                   stroke="hsl(142.1 76.2% 36.3%)"
                   strokeWidth="2"
                 />
-                <circle cx="0" cy="180" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-                <circle cx="100" cy="120" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-                <circle cx="200" cy="160" r="3" fill="hsl(142.1 76.2% 36.3%)" />
-                <circle cx="400" cy="60" r="3" fill="hsl(142.1 76.2% 36.3%)" />
               </svg>
             </div>
           </div>
