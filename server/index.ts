@@ -52,17 +52,15 @@ app.use(express.urlencoded({ extended: false }));
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    // Serve static files from the client build
-    app.use(express.static("dist/public", { index: false }));
+    const path = await import("path");
+    const __dirname = path.dirname(new URL(import.meta.url).pathname);
     
-    // Handle API routes first
-    app.use("/api", (req, res, next) => {
-      if (req.path.startsWith("/api")) {
-        next();
-      }
-    });
-
-    // Serve index.html for all other routes (client-side routing)
+    app.use(express.static(path.resolve(__dirname, "../dist/public")));
+    
+    // Handle API routes
+    app.use("/api", (req, res, next) => next());
+    
+    // Serve index.html for client-side routing
     app.get("*", (_req, res) => {
       res.sendFile(path.resolve(__dirname, "../dist/public/index.html"));
     });
