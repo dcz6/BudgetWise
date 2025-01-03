@@ -19,7 +19,7 @@ export default function LandingPage() {
         animate={{ opacity: 1, y: 0 }}
         className="container mx-auto px-4 pt-20 pb-16 text-center"
       >
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent leading-normal md:leading-normal">
           Master Your Finances with DNA Budget
         </h1>
         <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
