@@ -43,9 +43,8 @@ export function DashboardMockup() {
               <svg className="w-full h-full" viewBox="0 0 400 200" preserveAspectRatio="none">
                 <g className="grid">
                   {[...Array(6)].map((_, i) => (
-                    <>
+                    <g key={`grid-${i}`}>
                       <line
-                        key={`h-${i}`}
                         x1="0"
                         y1={i * 40}
                         x2="400"
@@ -55,7 +54,7 @@ export function DashboardMockup() {
                       />
                       {[...Array(8)].map((_, j) => (
                         <line
-                          key={`v-${j}`}
+                          key={`v-${i}-${j}`}
                           x1={j * 50}
                           y1="0"
                           x2={j * 50}
@@ -64,7 +63,7 @@ export function DashboardMockup() {
                           strokeOpacity="0.15"
                         />
                       ))}
-                    </>
+                    </g>
                   ))}
                 </g>
                 <path
