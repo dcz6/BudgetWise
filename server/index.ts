@@ -63,18 +63,7 @@ app.use((req, res, next) => {
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    const path = await import("path");
-    const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
-    app.use(express.static(path.resolve(__dirname, "../dist/public")));
-
-    // Handle API routes
-    app.use("/api", (req, res, next) => next());
-
-    // Serve index.html for client-side routing
-    app.get("*", (_req, res) => {
-      res.sendFile(path.resolve(__dirname, "../dist/public/index.html"));
-    });
+    serveStatic(app);
   }
 
   const PORT = 5000;
