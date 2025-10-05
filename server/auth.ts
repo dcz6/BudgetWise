@@ -1,4 +1,4 @@
-import type { Express, Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
@@ -62,7 +62,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
 // Auth routes
 export function registerAuthRoutes(app: Express) {
-  app.post("/api/auth/register", async (req: Request, res: Response) => {
+  app.post("/api/auth/register", async (req, res) => {
     try {
       const { email, password, name } = req.body;
 
@@ -95,18 +95,18 @@ export function registerAuthRoutes(app: Express) {
     }
   });
 
-  app.post("/api/auth/login", passport.authenticate("local"), (req: Request, res: Response) => {
+  app.post("/api/auth/login", passport.authenticate("local"), (req, res) => {
     const user = req.user as any;
     res.json({ id: user.id, email: user.email, name: user.name });
   });
 
-  app.post("/api/auth/logout", (req: Request, res: Response) => {
+  app.post("/api/auth/logout", (req, res) => {
     req.logout(() => {
       res.json({ message: "Logged out successfully" });
     });
   });
 
-  app.get("/api/auth/user", isAuthenticated, (req: Request, res: Response) => {
+  app.get("/api/auth/user", isAuthenticated, (req, res) => {
     const user = req.user as any;
     res.json({ id: user.id, email: user.email, name: user.name });
   });

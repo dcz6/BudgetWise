@@ -4,15 +4,8 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
 const __filename = fileURLToPath(import.meta.url);
-import express, { type Express } from "express";
-import fs from "fs";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-import { createServer as createViteServer } from "vite";
-import { type Server } from "http";
-
-const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+import { type Server } from "http";
 
 export async function setupVite(app: Express, server: Server) {
   const vite = await createViteServer({
